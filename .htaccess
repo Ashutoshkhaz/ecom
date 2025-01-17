@@ -2,6 +2,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
+    # Redirect /admin/dashboard to /admin/dashboard/index.php
+    RewriteRule ^admin/dashboard/?$ /admin/dashboard/index.php [L]
+    
     # Redirect all admin requests through index.php except for assets
     RewriteCond %{REQUEST_URI} ^/admin/
     RewriteCond %{REQUEST_URI} !\.(css|js|jpg|jpeg|png|gif|ico)$
