@@ -1,0 +1,43 @@
+/* Contact page styles */
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    margin: var(--spacing-xl) 0;
+}
+
+.contact-info {
+    background: var(--background-color);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-xl);
+}
+
+.contact-method {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.contact-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--background-alt);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+}
+
+.contact-map {
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    height: 300px;
+}
+
+@media (max-width: var(--breakpoint-md)) {
+    .contact-layout {
+        grid-template-columns: 1fr;
+    }
+} 
