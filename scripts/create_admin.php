@@ -2,13 +2,21 @@
 require_once '../config.php';
 
 // Admin details
-$admin_email = 'your-email@domain.com';
-$admin_password = 'your-secure-password';
-$admin_name = 'Your Name';
+$admin_email = 'admin@example.com';
+$admin_password = 'admin123';
+$admin_name = 'admin';
 
 try {
-    // Check if admin already exists
-    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ? AND role = 'admin'");
+    // First, check if role column exists
+    $stmt = $pdo->query("SHOW COLUMNS FROM users LIKE 'role'");
+    if ($stmt->rowCount() === 0) {
+        // Add role column if it doesn't exist
+        $pdo->exec("ALTER TABLE users ADD COLUMN role VARCHAR(20) DEFAULT 'user' AFTER password");
+        echo "Added role column to users table\n";
+    }
+
+    // Check if admin already exists (modified query to work with or without role column)
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$admin_email]);
     
     if ($stmt->fetch()) {
