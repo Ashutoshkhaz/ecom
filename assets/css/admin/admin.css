@@ -1,19 +1,15 @@
 /* Admin Panel Base Styles */
 .admin-layout {
-    display: grid;
-    grid-template-columns: 250px 1fr;
+    display: flex;
     min-height: 100vh;
 }
 
 /* Admin Sidebar */
 .admin-sidebar {
-    background: var(--background-alt);
-    padding: var(--spacing-lg);
-    border-right: 1px solid var(--border-color);
-    position: fixed;
     width: 250px;
-    height: 100vh;
-    overflow-y: auto;
+    background: #2c3e50;
+    color: white;
+    padding: 1rem;
 }
 
 .admin-logo {
@@ -54,15 +50,16 @@
 
 /* Admin Main Content */
 .admin-main {
-    padding: var(--spacing-xl);
-    margin-left: 250px;
+    flex: 1;
+    background: #f5f6fa;
+    padding: 1rem;
 }
 
 .admin-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-xl);
+    background: white;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .admin-title {
