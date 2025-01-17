@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Our Products</title>
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/shop.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header placeholder -->
+    <header class="site-header">
+        <nav class="main-nav">
+            <a href="/" class="logo">Your Store</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/shop.html" class="active">Shop</a>
+                <a href="/about.html">About</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="shop-layout">
+            <!-- Filters Sidebar -->
+            <aside class="filters">
+                <h2>Filters</h2>
+                <form action="" method="GET" id="filter-form">
+                    <div class="filter-section">
+                        <h3>Categories</h3>
+                        <div class="checkbox-group">
+                            <input type="radio" name="category" value="" id="cat-all" checked>
+                            <label for="cat-all">All Categories</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="radio" name="category" value="electronics" id="cat-electronics">
+                            <label for="cat-electronics">Electronics</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="radio" name="category" value="clothing" id="cat-clothing">
+                            <label for="cat-clothing">Clothing</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="radio" name="category" value="books" id="cat-books">
+                            <label for="cat-books">Books</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>Price Range</h3>
+                        <div class="price-inputs">
+                            <input type="number" name="min_price" placeholder="Min" min="0">
+                            <span>to</span>
+                            <input type="number" name="max_price" placeholder="Max" min="0">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                    <a href="/shop.html" class="btn btn-secondary">Clear Filters</a>
+                </form>
+            </aside>
+
+            <!-- Products Grid -->
+            <main class="products-section">
+                <div class="products-header">
+                    <p class="product-count">24 Products found</p>
+                    <div class="sort-section">
+                        <select name="sort" class="sort-select">
+                            <option value="newest">Newest</option>
+                            <option value="price_asc">Price: Low to High</option>
+                            <option value="price_desc">Price: High to Low</option>
+                            <option value="popularity">Most Popular</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="products-grid">
+                    <!-- Sample Product Cards -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <a href="/product-details.html">
+                                <img src="/assets/images/sample-product-1.jpg" alt="Sample Product 1">
+                            </a>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">
+                                <a href="/product-details.html">Wireless Headphones</a>
+                            </h3>
+                            <p class="product-category">Electronics</p>
+                            <div class="product-price">$129.99</div>
+                            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Repeat product cards for sample data -->
+                    <!-- You can copy-paste the product-card div multiple times -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer placeholder -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>Your trusted online store for quality products.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/shop.html">Shop</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>Email: info@yourstore.com</p>
+                    <p>Phone: (555) 123-4567</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
