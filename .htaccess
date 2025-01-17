@@ -1,0 +1,21 @@
+# Protect admin directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Redirect all admin requests through index.php except for assets
+    RewriteCond %{REQUEST_URI} ^/admin/
+    RewriteCond %{REQUEST_URI} !\.(css|js|jpg|jpeg|png|gif|ico)$
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^admin/(.*)$ /admin/index.php [L]
+    
+    # Block direct access to sensitive files
+    RewriteRule ^admin/auth_check\.php$ - [F,L]
+    RewriteRule ^config\.php$ - [F,L]
+</IfModule>
+
+# Additional security headers
+<IfModule mod_headers.c>
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options "nosniff"
+</IfModule> 
