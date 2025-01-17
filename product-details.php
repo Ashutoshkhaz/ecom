@@ -1,10 +1,29 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require_once 'config.php';
+
+// Add this to log errors
+function logError($message) {
+    error_log(date('Y-m-d H:i:s') . " - " . $message . "\n", 3, "error.log");
+}
 
 $slug = filter_input(INPUT_GET, 'slug', FILTER_SANITIZE_STRING);
 if (!$slug) {
     header('Location: /shop.php');
     exit;
+}
+
+// First, verify if the views column exists
+try {
+    $checkColumn = $pdo->query("SHOW COLUMNS FROM products LIKE 'views'");
+    if ($checkColumn->rowCount() === 0) {
+        // Add views column if it doesn't exist
+        $pdo->exec("ALTER TABLE products ADD COLUMN views INT DEFAULT 0");
+    }
+} catch (PDOException $e) {
+    // Log error and continue - don't let this stop page load
+    error_log("Error checking/creating views column: " . $e->getMessage());
 }
 
 // Fetch product details with primary image
@@ -39,9 +58,18 @@ $relatedStmt = $pdo->prepare("
 $relatedStmt->execute([$product['category_id'], $product['id']]);
 $relatedProducts = $relatedStmt->fetchAll();
 
-// Update view count
-$viewStmt = $pdo->prepare("UPDATE products SET views = views + 1 WHERE id = ?");
-$viewStmt->execute([$product['id']]);
+// Update view count - only do this once
+try {
+    $viewStmt = $pdo->prepare("
+        UPDATE products 
+        SET views = COALESCE(views, 0) + 1 
+        WHERE id = ?
+    ");
+    $viewStmt->execute([$product['id']]);
+} catch (PDOException $e) {
+    // Log error but don't stop page load
+    error_log("Error updating view count: " . $e->getMessage());
+}
 
 $pageTitle = $product['name'];
 require_once 'templates/header.php';
