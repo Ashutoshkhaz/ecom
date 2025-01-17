@@ -5,7 +5,12 @@
     # Handle admin section routes
     RewriteRule ^admin/dashboard/?$ /admin/dashboard/index.php [L]
     RewriteRule ^admin/products/?$ /admin/products/index.php [L]
+    RewriteRule ^admin/products/create/?$ /admin/products/create.php [L]
+    RewriteRule ^admin/products/edit/([0-9]+)/?$ /admin/products/edit.php?id=$1 [L]
     RewriteRule ^admin/orders/?$ /admin/orders/index.php [L]
+    
+    # Allow access to admin assets
+    RewriteCond %{REQUEST_URI} !^/admin/assets/
     
     # Redirect all admin requests through index.php except for assets
     RewriteCond %{REQUEST_URI} ^/admin/
@@ -16,9 +21,6 @@
     # Block direct access to sensitive files
     RewriteRule ^admin/auth_check\.php$ - [F,L]
     RewriteRule ^config\.php$ - [F,L]
-    
-    # Allow access to admin assets
-    RewriteCond %{REQUEST_URI} !^/admin/assets/
 </IfModule>
 
 # Additional security headers

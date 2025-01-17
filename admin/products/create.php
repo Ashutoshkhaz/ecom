@@ -12,9 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Insert product
         $stmt = $pdo->prepare("
-            INSERT INTO products (name, description, price, stock_quantity, category_id) 
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO products (name, description, price, stock_quantity, category_id, created_at) 
+            VALUES (?, ?, ?, ?, ?, NOW())
         ");
+        
         $stmt->execute([
             $_POST['name'],
             $_POST['description'],
@@ -27,21 +28,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Handle image uploads
         if (!empty($_FILES['images']['name'][0])) {
-            $uploadDir = '../../uploads/products/';
-            
+            $uploadDir = __DIR__ . '/../../uploads/products/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
             foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
                 $fileName = uniqid() . '_' . $_FILES['images']['name'][$key];
-                move_uploaded_file($tmp_name, $uploadDir . $fileName);
-                
-                $stmt = $pdo->prepare("
-                    INSERT INTO product_images (product_id, image_path, is_primary) 
-                    VALUES (?, ?, ?)
-                ");
-                $stmt->execute([
-                    $productId,
-                    '/uploads/products/' . $fileName,
-                    $key === 0 ? 1 : 0
-                ]);
+                $uploadFile = $uploadDir . $fileName;
+
+                if (move_uploaded_file($tmp_name, $uploadFile)) {
+                    $stmt = $pdo->prepare("
+                        INSERT INTO product_images (product_id, image_path, is_primary) 
+                        VALUES (?, ?, ?)
+                    ");
+                    $stmt->execute([$productId, 'uploads/products/' . $fileName, $key === 0]);
+                }
             }
         }
 
@@ -54,11 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$pageTitle = "Add New Product";
-require_once '../layout.php';
+$pageTitle = "Create Product";
 ?>
 
 <div class="admin-form">
+    <?php if (isset($error)): ?>
+        <div class="alert alert-error"><?= htmlspecialchars($error) ?></div>
+    <?php endif; ?>
+
     <form method="POST" enctype="multipart/form-data">
         <div class="form-grid">
             <div class="form-group">
@@ -87,21 +92,17 @@ require_once '../layout.php';
                 <label for="stock_quantity">Stock Quantity</label>
                 <input type="number" id="stock_quantity" name="stock_quantity" required>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" name="description" rows="5" required></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="images">Product Images</label>
-            <div class="image-upload-area" id="imageUpload">
-                <input type="file" name="images[]" multiple accept="image/*" 
-                       onchange="previewImages(this)">
-                <p>Drag & drop images here or click to select</p>
+            <div class="form-group full-width">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
             </div>
-            <div class="image-preview" id="imagePreview"></div>
+
+            <div class="form-group full-width">
+                <label for="images">Product Images</label>
+                <input type="file" id="images" name="images[]" multiple accept="image/*" onchange="previewImages(this)">
+                <div id="imagePreview" class="image-preview"></div>
+            </div>
         </div>
 
         <div class="form-actions">
@@ -119,13 +120,10 @@ function previewImages(input) {
     if (input.files) {
         Array.from(input.files).forEach(file => {
             const reader = new FileReader();
-            reader.onload = e => {
+            reader.onload = function(e) {
                 const div = document.createElement('div');
                 div.className = 'preview-item';
-                div.innerHTML = `
-                    <img src="${e.target.result}">
-                    <button type="button" class="remove-image" onclick="this.parentElement.remove()">×</button>
-                `;
+                div.innerHTML = `<img src="${e.target.result}">`;
                 preview.appendChild(div);
             };
             reader.readAsDataURL(file);

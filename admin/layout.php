@@ -1,10 +1,14 @@
 <?php
-// Determine the content view based on the current page
+// Determine the content view based on the current page and action
 $currentPage = basename(dirname($_SERVER['PHP_SELF']));
-$contentView = match($currentPage) {
-    'products' => __DIR__ . '/products/index.php',
-    'orders' => __DIR__ . '/orders/index.php',
-    'dashboard' => __DIR__ . '/dashboard/index.php',
+$action = basename($_SERVER['PHP_SELF'], '.php');
+
+$contentView = match("$currentPage/$action") {
+    'products/create' => __DIR__ . '/products/create.php',
+    'products/edit' => __DIR__ . '/products/edit.php',
+    'products/index' => __DIR__ . '/products/index.php',
+    'orders/index' => __DIR__ . '/orders/index.php',
+    'dashboard/index' => __DIR__ . '/dashboard/index.php',
     default => __DIR__ . '/dashboard/index.php',
 };
 
