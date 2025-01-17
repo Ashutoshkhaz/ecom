@@ -2,8 +2,10 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
-    # Redirect /admin/dashboard to /admin/dashboard/index.php
+    # Handle admin section routes
     RewriteRule ^admin/dashboard/?$ /admin/dashboard/index.php [L]
+    RewriteRule ^admin/products/?$ /admin/products/index.php [L]
+    RewriteRule ^admin/orders/?$ /admin/orders/index.php [L]
     
     # Redirect all admin requests through index.php except for assets
     RewriteCond %{REQUEST_URI} ^/admin/
