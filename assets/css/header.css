@@ -88,7 +88,7 @@
 .mobile-sidebar {
     position: fixed;
     top: 0;
-    left: -330px;
+    left: -100%;
     width: 280px;
     height: 100vh;
     background-color: white;
@@ -96,6 +96,7 @@
     transition: left var(--transition-speed) var(--transition-timing);
     z-index: 1001;
     padding: var(--spacing-lg);
+    overflow-y: auto;
 }
 
 .mobile-sidebar.active {
@@ -110,6 +111,15 @@
     border: none;
     font-size: var(--font-size-lg);
     cursor: pointer;
+    color: var(--text-color);
+    padding: var(--spacing-xs);
+    z-index: 1002;
+    opacity: 0;
+    transition: opacity var(--transition-speed) var(--transition-timing);
+}
+
+.mobile-sidebar.active .mobile-sidebar-close {
+    opacity: 1;
 }
 
 .mobile-nav-links {
