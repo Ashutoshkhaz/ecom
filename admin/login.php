@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     $stmt = $pdo->prepare("
-        SELECT id, name, password, role 
+        SELECT id, full_name, password, role 
         FROM users 
         WHERE email = ? AND role = 'admin'
         LIMIT 1
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($admin && password_verify($password, $admin['password'])) {
         $_SESSION['admin_id'] = $admin['id'];
-        $_SESSION['admin_name'] = $admin['name'];
+        $_SESSION['admin_name'] = $admin['full_name'];
         $_SESSION['admin_role'] = $admin['role'];
         header('Location: /admin/dashboard');
         exit;
