@@ -16,6 +16,9 @@
     # Block direct access to sensitive files
     RewriteRule ^admin/auth_check\.php$ - [F,L]
     RewriteRule ^config\.php$ - [F,L]
+    
+    # Allow access to admin assets
+    RewriteCond %{REQUEST_URI} !^/admin/assets/
 </IfModule>
 
 # Additional security headers

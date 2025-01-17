@@ -1,14 +1,28 @@
+/* Admin Panel Base Styles */
+:root {
+    --admin-primary: #3498db;
+    --admin-secondary: #2c3e50;
+    --admin-success: #2ecc71;
+    --admin-danger: #e74c3c;
+    --admin-warning: #f1c40f;
+    --admin-text: #2c3e50;
+    --admin-text-light: #7f8c8d;
+    --admin-border: #eee;
+    --admin-bg: #f5f6fa;
+    --admin-bg-dark: #2c3e50;
+}
+
 /* Layout */
 .admin-layout {
     display: flex;
     min-height: 100vh;
-    background: #f5f6fa;
+    background: var(--admin-bg);
 }
 
 /* Sidebar */
 .admin-sidebar {
     width: 250px;
-    background: #2c3e50;
+    background: var(--admin-bg-dark);
     color: white;
     padding: 1rem;
     position: fixed;
@@ -22,6 +36,11 @@
     font-weight: bold;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     margin-bottom: 1rem;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .admin-nav ul {
@@ -30,7 +49,7 @@
     margin: 0;
 }
 
-.admin-nav a {
+.admin-nav-link {
     display: flex;
     align-items: center;
     padding: 0.75rem 1rem;
@@ -41,17 +60,17 @@
     transition: all 0.3s ease;
 }
 
-.admin-nav a:hover {
+.admin-nav-link:hover {
     background: rgba(255,255,255,0.1);
     color: white;
 }
 
-.admin-nav a.active {
-    background: #3498db;
+.admin-nav-link.active {
+    background: var(--admin-primary);
     color: white;
 }
 
-.admin-nav i {
+.admin-nav-link i {
     margin-right: 0.75rem;
     width: 20px;
     text-align: center;
@@ -81,7 +100,13 @@
 .admin-title {
     margin: 0;
     font-size: 1.5rem;
-    color: #2c3e50;
+    color: var(--admin-text);
+}
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .admin-user-menu {
@@ -91,12 +116,12 @@
 }
 
 .admin-user-name {
-    color: #2c3e50;
+    color: var(--admin-text);
     font-weight: 500;
 }
 
 .admin-logout {
-    color: #e74c3c;
+    color: var(--admin-danger);
     text-decoration: none;
     padding: 0.5rem;
     border-radius: 4px;
@@ -136,7 +161,7 @@
 .stat-icon {
     width: 48px;
     height: 48px;
-    background: #3498db;
+    background: var(--admin-primary);
     color: white;
     border-radius: 8px;
     display: flex;
@@ -147,7 +172,7 @@
 
 .stat-details h3 {
     margin: 0 0 0.5rem;
-    color: #7f8c8d;
+    color: var(--admin-text-light);
     font-size: 0.875rem;
 }
 
@@ -155,12 +180,13 @@
     margin: 0;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--admin-text);
 }
 
 /* Tables */
 .table-responsive {
     overflow-x: auto;
+    margin-top: 2rem;
 }
 
 .admin-table {
@@ -172,15 +198,20 @@
 .admin-table td {
     padding: 1rem;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--admin-border);
 }
 
 .admin-table th {
-    background: #f8f9fa;
+    background: var(--admin-bg);
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--admin-text);
 }
 
+.admin-table tr:hover {
+    background: var(--admin-bg);
+}
+
+/* Status Badges */
 .status-badge {
     padding: 0.25rem 0.75rem;
     border-radius: 999px;
@@ -203,7 +234,7 @@
     color: #721c24;
 }
 
-/* Responsive Design */
+/* Mobile Responsive */
 @media (max-width: 768px) {
     .admin-sidebar {
         transform: translateX(-100%);
@@ -226,7 +257,7 @@
         bottom: 1rem;
         right: 1rem;
         z-index: 1001;
-        background: #3498db;
+        background: var(--admin-primary);
         color: white;
         border: none;
         width: 48px;
