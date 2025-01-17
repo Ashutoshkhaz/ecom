@@ -7,15 +7,7 @@ $admin_password = 'admin123';
 $admin_name = 'admin';
 
 try {
-    // First, check if role column exists
-    $stmt = $pdo->query("SHOW COLUMNS FROM users LIKE 'role'");
-    if ($stmt->rowCount() === 0) {
-        // Add role column if it doesn't exist
-        $pdo->exec("ALTER TABLE users ADD COLUMN role VARCHAR(20) DEFAULT 'user' AFTER password");
-        echo "Added role column to users table\n";
-    }
-
-    // Check if admin already exists (modified query to work with or without role column)
+    // Check if admin already exists
     $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$admin_email]);
     
@@ -24,9 +16,9 @@ try {
         exit;
     }
 
-    // Create admin user
+    // Create admin user (using full_name instead of name)
     $stmt = $pdo->prepare("
-        INSERT INTO users (email, password, name, role, created_at) 
+        INSERT INTO users (email, password, full_name, role, created_at) 
         VALUES (?, ?, ?, 'admin', NOW())
     ");
     
