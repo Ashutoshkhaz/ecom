@@ -2,9 +2,9 @@
 require_once '../config.php';
 
 // Admin details
-$admin_email = 'admin@example.com';
-$admin_password = 'your_secure_password';
-$admin_name = 'Admin User';
+$admin_email = 'your-email@domain.com';
+$admin_password = 'your-secure-password';
+$admin_name = 'Your Name';
 
 try {
     // Check if admin already exists
